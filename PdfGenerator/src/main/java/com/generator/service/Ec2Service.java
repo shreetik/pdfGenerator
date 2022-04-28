@@ -28,9 +28,6 @@ AWSCredentials credentials = new BasicAWSCredentials(Config.ACCESS_KEY_ID, Confi
         
         DescribeInstancesRequest request = new DescribeInstancesRequest();
        
-        System.out.println("retriving..");
-       
-        	System.out.println("inside..");
             DescribeInstancesResult response = ec2Client.describeInstances(request);
             						
              List<Reservation> reservations =  response.getReservations();
