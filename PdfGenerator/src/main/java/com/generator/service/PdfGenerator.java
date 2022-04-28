@@ -6,8 +6,10 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.generator.model.Ec2Data;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Font;
@@ -16,11 +18,16 @@ import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
 
+
+
 @Service
 public class PdfGenerator {
 
 	public void export(HttpServletResponse response) throws DocumentException, IOException {
 		
+		Ec2Service ec2Service = new Ec2Service();
+		
+		Ec2Data ec2data =  ec2Service.getEc2Data();
 		Document document = new Document(PageSize.A4);
 		PdfWriter.getInstance(document, response.getOutputStream());
 		
@@ -35,7 +42,7 @@ public class PdfGenerator {
 		Paragraph line2 = new Paragraph("Report Date : "+currentDateTime, fontParagraph);
 		Paragraph line3 = new Paragraph(" ",fontParagraph);
 		Paragraph line4 = new Paragraph("Number of Accounts : ",fontParagraph);
-		Paragraph line5 = new Paragraph("Total EC2 : ",fontParagraph);
+		Paragraph line5 = new Paragraph("Total EC2 : "+ec2data.getTotal_instances(),fontParagraph);
 		Paragraph line6 = new Paragraph("Total EBS : ",fontParagraph);
 		Paragraph line7 = new Paragraph("Total Snapshots : ",fontParagraph);
 		Paragraph line8 = new Paragraph("  ",fontParagraph);
@@ -45,8 +52,8 @@ public class PdfGenerator {
 		Paragraph line12 = new Paragraph(" ",fontParagraph);
 		Paragraph line13 = new Paragraph("Region : Mumbai ",fontParagraph);
 		Paragraph line14 = new Paragraph(" ",fontParagraph);
-		Paragraph line15 = new Paragraph("EC2 in Start State : ",fontParagraph);
-		Paragraph line16 = new Paragraph("EC2 in Stopped State : ",fontParagraph);
+		Paragraph line15 = new Paragraph("EC2 in Start State : "+ec2data.getStart_state(),fontParagraph);
+		Paragraph line16 = new Paragraph("EC2 in Stopped State : "+ec2data.getStop_state(),fontParagraph);
 		Paragraph line17 = new Paragraph("RDS",fontParagraph);
 		Paragraph line18 = new Paragraph("EBS",fontParagraph);
 		
