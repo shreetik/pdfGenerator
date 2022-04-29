@@ -29,7 +29,7 @@ public class PdfGenerator {
 		
 		Ec2Data ec2data =  ec2Service.getEc2Data();
 		Document document = new Document(PageSize.A4);
-		PdfWriter.getInstance(document, response.getOutputStream());
+		PdfWriter pdf = PdfWriter.getInstance(document, response.getOutputStream());
 		
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
 		String currentDateTime = dateFormatter.format(new Date());
@@ -43,8 +43,8 @@ public class PdfGenerator {
 		Paragraph line3 = new Paragraph(" ",fontParagraph);
 		Paragraph line4 = new Paragraph("Number of Accounts : ",fontParagraph);
 		Paragraph line5 = new Paragraph("Total EC2 : "+ec2data.getTotal_instances(),fontParagraph);
-		Paragraph line6 = new Paragraph("Total EBS : ",fontParagraph);
-		Paragraph line7 = new Paragraph("Total Snapshots : ",fontParagraph);
+		Paragraph line6 = new Paragraph("Total EBS : "+ec2data.getVolume_count(),fontParagraph);
+		Paragraph line7 = new Paragraph("Total Snapshots : "+ec2data.getSnapshot_count(),fontParagraph);
 		Paragraph line8 = new Paragraph("  ",fontParagraph);
 		Paragraph line9 = new Paragraph("Account wise Operations Report : ",fontParagraph);
 		Paragraph line10 = new Paragraph(" ",fontParagraph);
